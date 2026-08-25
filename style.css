@@ -1,0 +1,86 @@
+/* Custom scrollbar for better look */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #141414;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Ken Burns Effect */
+@keyframes kenburns {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+.animate-kenburns {
+    animation: kenburns 30s ease-in-out infinite;
+}
+
+/* Pulse Glow */
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 230, 230, 0.4); }
+    50% { box-shadow: 0 0 40px rgba(0, 230, 230, 0.8), 0 0 10px rgba(0, 230, 230, 0.5) inset; }
+}
+.pulse-glow {
+    animation: pulseGlow 2s infinite;
+}
+
+/* Sweeping Button Highlight */
+.sweep-btn {
+    position: relative;
+    overflow: hidden;
+}
+.sweep-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
+    transform: skewX(-20deg);
+    animation: sweep 3s infinite;
+}
+@keyframes sweep {
+    0% { left: -100%; }
+    20% { left: 200%; }
+    100% { left: 200%; }
+}
+
+/* Star Rating Hover (JS will handle active class) */
+.star-icon {
+    transition: color 0.2s, transform 0.2s;
+    cursor: pointer;
+}
+.star-icon.active, .star-icon:hover {
+    color: #fff;
+    transform: scale(1.1);
+    text-shadow: 0 0 10px rgba(0,230,230,0.8);
+}
+
+/* 3D Tilt */
+.tilt-card {
+    transition: transform 0.1s ease-out;
+    transform-style: preserve-3d;
+}
+
+/* Tab Transitions */
+.tab-content {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.tab-content.active {
+    display: block;
+    opacity: 1;
+}

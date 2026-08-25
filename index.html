@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coyote vs. Acme - Stream Now</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        netflix: '#141414',
+                        accent: '#00e6e6', /* Cyan/Neon green accent */
+                        accentHover: '#00b3b3'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-netflix text-white font-sans antialiased overflow-x-hidden flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-netflix bg-opacity-90 backdrop-blur-md transition-all duration-300 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Left: Logo & Links -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 cursor-pointer">
+                        <span class="text-accent text-2xl font-bold tracking-tighter"><i class="fa-solid fa-play mr-2"></i>STREAMX</span>
+                    </div>
+                    <div class="hidden md:block ml-10">
+                        <div class="flex items-baseline space-x-6">
+                            <a href="#" class="text-gray-300 hover:text-white px-2 py-2 rounded-md text-sm font-medium transition-colors">Popular Movies</a>
+                            <a href="#" class="text-gray-300 hover:text-white px-2 py-2 rounded-md text-sm font-medium transition-colors">Top Rated Movies</a>
+                            <a href="#" class="text-gray-300 hover:text-white px-2 py-2 rounded-md text-sm font-medium transition-colors">Popular Shows</a>
+                            <a href="#" class="text-gray-300 hover:text-white px-2 py-2 rounded-md text-sm font-medium transition-colors">Top Rated Shows</a>
+                            <a href="#" class="text-gray-300 hover:text-white px-2 py-2 rounded-md text-sm font-medium transition-colors">Upcoming Movies</a>
+                            <div class="relative group">
+                                <button class="text-gray-300 hover:text-white px-2 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                                    Categories <i class="fa-solid fa-chevron-down ml-1 text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right: Search & Auth -->
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-300 hover:text-white transition-colors">
+                        <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                    </button>
+                    <button id="signInBtn" class="hidden sm:block border border-gray-500 text-white hover:border-white hover:bg-gray-800 px-4 py-1.5 rounded-md text-sm font-medium transition-all">
+                        Sign In
+                    </button>
+                    <button id="signUpBtn" class="bg-accent hover:bg-accentHover text-black px-4 py-1.5 rounded-md text-sm font-bold transition-all shadow-[0_0_15px_rgba(0,230,230,0.4)]">
+                        Sign Up
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Video Player / Banner Preview) -->
+    <section class="relative h-[70vh] min-h-[500px] w-full flex items-center justify-center overflow-hidden">
+        <!-- Background Image (Placeholder) -->
+        <div class="absolute inset-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1925&q=80')] bg-cover bg-center opacity-40 animate-kenburns"></div>
+        
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-netflix via-netflix/50 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-netflix via-transparent to-transparent"></div>
+
+        <!-- Play Button -->
+        <div id="watchTrailerBtn" class="relative z-10 flex flex-col items-center justify-center cursor-pointer group">
+            <div class="w-24 h-24 rounded-full bg-accent/20 flex items-center justify-center backdrop-blur-sm border border-accent/50 group-hover:bg-accent/40 group-hover:scale-110 transition-all duration-300 pulse-glow">
+                <i class="fa-solid fa-play text-4xl text-accent group-hover:text-white pl-2 transition-colors"></i>
+            </div>
+            <span class="mt-4 text-lg font-medium tracking-widest text-gray-300 group-hover:text-white transition-colors uppercase">Watch Trailer</span>
+        </div>
+    </section>
+
+    <!-- Movie Details Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-20 pb-20 w-full flex-grow">
+        <div id="movieInfoCard" class="tilt-card bg-gray-900/80 backdrop-blur-xl border border-gray-800 rounded-2xl p-6 sm:p-8 shadow-2xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+            
+            <!-- Movie Info -->
+            <div class="flex-1 w-full">
+                <!-- Countdown Timer -->
+                <div class="mb-4 inline-flex items-center gap-4 bg-gray-800/80 rounded-lg px-4 py-2 border border-accent/30 shadow-[0_0_15px_rgba(0,230,230,0.1)]">
+                    <span class="text-xs text-accent font-bold uppercase tracking-wider"><i class="fa-solid fa-clock mr-1"></i> Releases In:</span>
+                    <div id="countdown" class="flex gap-3 text-white font-mono text-lg font-bold">
+                        <div class="flex flex-col items-center leading-none"><span id="cd-days">00</span><span class="text-[10px] text-gray-500 font-sans font-normal uppercase mt-1">Days</span></div>
+                        <span class="text-accent">:</span>
+                        <div class="flex flex-col items-center leading-none"><span id="cd-hours">00</span><span class="text-[10px] text-gray-500 font-sans font-normal uppercase mt-1">Hrs</span></div>
+                        <span class="text-accent">:</span>
+                        <div class="flex flex-col items-center leading-none"><span id="cd-mins">00</span><span class="text-[10px] text-gray-500 font-sans font-normal uppercase mt-1">Min</span></div>
+                        <span class="text-accent">:</span>
+                        <div class="flex flex-col items-center leading-none"><span id="cd-secs">00</span><span class="text-[10px] text-gray-500 font-sans font-normal uppercase mt-1">Sec</span></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-3">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white drop-shadow-md">Coyote vs. Acme</h1>
+                    <div class="flex items-center text-accent text-lg sm:text-xl drop-shadow-md mt-1 sm:mt-0" id="starContainer">
+                        <i class="fa-solid fa-star star-icon"></i>
+                        <i class="fa-solid fa-star star-icon"></i>
+                        <i class="fa-solid fa-star star-icon"></i>
+                        <i class="fa-solid fa-star star-icon"></i>
+                        <i class="fa-solid fa-star-half-stroke star-icon"></i>
+                    </div>
+                </div>
+                
+                <p class="text-gray-400 text-base sm:text-lg mb-6 max-w-3xl leading-relaxed">
+                    A story set in the ACME warehouse, the manufacturer of anything and everything used by the Looney Tunes characters.
+                </p>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+                    <div>
+                        <span class="block text-gray-500 mb-1">Released</span>
+                        <span class="font-medium text-gray-200">2026-08-28</span>
+                    </div>
+                    <div>
+                        <span class="block text-gray-500 mb-1">Runtime</span>
+                        <span class="font-medium text-gray-200">140 minutes</span>
+                    </div>
+                    <div>
+                        <span class="block text-gray-500 mb-1">Genre</span>
+                        <span class="font-medium text-gray-200">Animation / Comedy</span>
+                    </div>
+                    <div>
+                        <span class="block text-gray-500 mb-1">Director</span>
+                        <span class="font-medium text-gray-200">Dave Green</span>
+                    </div>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-800 text-sm">
+                    <span class="text-gray-500">Stars:</span>
+                    <span class="text-gray-300 ml-2">John Cena, Will Forte, Lana Condor</span>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="w-full lg:w-auto shrink-0 flex flex-col gap-4">
+                <button id="subscribeBtn" class="sweep-btn w-full bg-accent hover:bg-accentHover text-black px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-bold transition-all shadow-[0_0_20px_rgba(0,230,230,0.3)] hover:shadow-[0_0_30px_rgba(0,230,230,0.6)] flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-unlock-keyhole z-10"></i> <span class="z-10">Subscribe to Access</span> <span class="opacity-50 z-10">|</span> <span class="z-10">$0.00</span>
+                </button>
+                <p class="text-center text-xs text-gray-500">Cancel anytime. Terms apply.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explorable Content Tabs -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 pb-20 w-full">
+        <!-- Tab Headers -->
+        <div class="flex space-x-8 border-b border-gray-800 mb-8 overflow-x-auto custom-scrollbar">
+            <button class="tab-btn active pb-4 text-accent border-b-2 border-accent font-medium transition-colors whitespace-nowrap" data-target="tab-cast">Cast & Crew</button>
+            <button class="tab-btn pb-4 text-gray-500 hover:text-gray-300 border-b-2 border-transparent hover:border-gray-500 font-medium transition-colors whitespace-nowrap" data-target="tab-reviews">User Reviews</button>
+            <button class="tab-btn pb-4 text-gray-500 hover:text-gray-300 border-b-2 border-transparent hover:border-gray-500 font-medium transition-colors whitespace-nowrap" data-target="tab-more">More Like This</button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div class="min-h-[250px]">
+            <!-- Cast & Crew -->
+            <div id="tab-cast" class="tab-content active">
+                <div class="flex gap-6 overflow-x-auto pb-6 custom-scrollbar">
+                    <!-- Actor 1 -->
+                    <div class="flex flex-col items-center shrink-0 w-32 group cursor-pointer">
+                        <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-800 group-hover:border-accent transition-colors duration-300 mb-3 shadow-lg">
+                            <img src="https://ui-avatars.com/api/?name=John+Cena&background=141414&color=00e6e6&size=150" alt="John Cena" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h4 class="text-white font-medium text-center text-sm">John Cena</h4>
+                        <p class="text-gray-500 text-xs text-center mt-1">Acme Exec</p>
+                    </div>
+                    <!-- Actor 2 -->
+                    <div class="flex flex-col items-center shrink-0 w-32 group cursor-pointer">
+                        <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-800 group-hover:border-accent transition-colors duration-300 mb-3 shadow-lg">
+                            <img src="https://ui-avatars.com/api/?name=Will+Forte&background=141414&color=00e6e6&size=150" alt="Will Forte" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h4 class="text-white font-medium text-center text-sm">Will Forte</h4>
+                        <p class="text-gray-500 text-xs text-center mt-1">Wile E. Coyote's Lawyer</p>
+                    </div>
+                    <!-- Actor 3 -->
+                    <div class="flex flex-col items-center shrink-0 w-32 group cursor-pointer">
+                        <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-800 group-hover:border-accent transition-colors duration-300 mb-3 shadow-lg">
+                            <img src="https://ui-avatars.com/api/?name=Lana+Condor&background=141414&color=00e6e6&size=150" alt="Lana Condor" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h4 class="text-white font-medium text-center text-sm">Lana Condor</h4>
+                        <p class="text-gray-500 text-xs text-center mt-1">Support Cast</p>
+                    </div>
+                    <!-- Actor 4 -->
+                    <div class="flex flex-col items-center shrink-0 w-32 group cursor-pointer">
+                        <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-800 group-hover:border-accent transition-colors duration-300 mb-3 shadow-lg">
+                            <img src="https://ui-avatars.com/api/?name=Dave+Green&background=141414&color=fff&size=150" alt="Dave Green" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h4 class="text-white font-medium text-center text-sm">Dave Green</h4>
+                        <p class="text-gray-500 text-xs text-center mt-1">Director</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Reviews -->
+            <div id="tab-reviews" class="tab-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Review 1 -->
+                    <div class="bg-gray-800/40 rounded-xl p-6 border border-gray-700/50 hover:bg-gray-800/80 transition-colors">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold">JD</div>
+                                <div>
+                                    <h5 class="text-white font-medium text-sm">John Doe</h5>
+                                    <span class="text-gray-500 text-xs">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="text-accent text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm italic">"Absolutely hilarious! The blend of live-action and animation is flawless. A must-watch for Looney Tunes fans."</p>
+                    </div>
+                    <!-- Review 2 -->
+                    <div class="bg-gray-800/40 rounded-xl p-6 border border-gray-700/50 hover:bg-gray-800/80 transition-colors">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold">AS</div>
+                                <div>
+                                    <h5 class="text-white font-medium text-sm">Alice Smith</h5>
+                                    <span class="text-gray-500 text-xs">1 day ago</span>
+                                </div>
+                            </div>
+                            <div class="text-accent text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm italic">"John Cena is surprisingly funny in this role. The legal battle over Acme gadgets is a genius premise."</p>
+                    </div>
+                    <!-- Review 3 -->
+                    <div class="bg-gray-800/40 rounded-xl p-6 border border-gray-700/50 hover:bg-gray-800/80 transition-colors">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold">MK</div>
+                                <div>
+                                    <h5 class="text-white font-medium text-sm">Mike K.</h5>
+                                    <span class="text-gray-500 text-xs">3 days ago</span>
+                                </div>
+                            </div>
+                            <div class="text-accent text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm italic">"The animation quality is top-tier. Nostalgic and fresh at the same time."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More Like This -->
+            <div id="tab-more" class="tab-content">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Movie 1 -->
+                    <div class="rounded-lg overflow-hidden relative group cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full aspect-[2/3] object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <i class="fa-solid fa-play text-3xl text-accent"></i>
+                        </div>
+                    </div>
+                    <!-- Movie 2 -->
+                    <div class="rounded-lg overflow-hidden relative group cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full aspect-[2/3] object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <i class="fa-solid fa-play text-3xl text-accent"></i>
+                        </div>
+                    </div>
+                    <!-- Movie 3 -->
+                    <div class="rounded-lg overflow-hidden relative group cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1616530940355-351fabd9524b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full aspect-[2/3] object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <i class="fa-solid fa-play text-3xl text-accent"></i>
+                        </div>
+                    </div>
+                    <!-- Movie 4 -->
+                    <div class="rounded-lg overflow-hidden relative group cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full aspect-[2/3] object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <i class="fa-solid fa-play text-3xl text-accent"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 bg-netflix py-8 mt-auto w-full">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-gray-500 text-sm">&copy; 2026 STREAMX. All rights reserved.</p>
+            <div class="flex gap-6">
+                <a href="#" class="text-gray-500 hover:text-gray-300 text-sm transition-colors">DMCA</a>
+                <a href="#" class="text-gray-500 hover:text-gray-300 text-sm transition-colors">Privacy Policy</a>
+                <a href="#" class="text-gray-500 hover:text-gray-300 text-sm transition-colors">Terms & Condition</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modals (Hidden by default) -->
+    <!-- Overlay -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+        
+        <!-- Sign In Modal -->
+        <div id="signInModal" class="hidden bg-gray-900 border border-gray-800 w-full max-w-md rounded-2xl p-6 sm:p-8 relative transform scale-95 transition-transform duration-300 shadow-2xl">
+            <button class="closeModalBtn absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h2 class="text-2xl font-bold text-white mb-6">Sign In</h2>
+            <form class="flex flex-col gap-4">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Email</label>
+                    <input type="email" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="you@example.com">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Password</label>
+                    <input type="password" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full bg-white text-black font-bold rounded-lg px-4 py-3 mt-2 hover:bg-gray-200 transition-colors">
+                    Sign In
+                </button>
+                <div class="text-center mt-4">
+                    <a href="#" class="text-sm text-gray-500 hover:text-white">Forgot password?</a>
+                </div>
+                <div class="text-center mt-2 text-sm text-gray-400">
+                    New to StreamX? <button type="button" id="switchToSignUp" class="text-accent hover:underline">Sign up now</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Sign Up Modal -->
+        <div id="signUpModal" class="hidden bg-gray-900 border border-gray-800 w-full max-w-md rounded-2xl p-6 sm:p-8 relative transform scale-95 transition-transform duration-300 shadow-2xl">
+            <button class="closeModalBtn absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h2 class="text-2xl font-bold text-white mb-6">Create Account</h2>
+            <form class="flex flex-col gap-4">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Full Name</label>
+                    <input type="text" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="John Doe">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Email</label>
+                    <input type="email" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="you@example.com">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Password</label>
+                    <input type="password" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full bg-accent hover:bg-accentHover text-black font-bold rounded-lg px-4 py-3 mt-2 transition-colors shadow-[0_0_15px_rgba(0,230,230,0.3)]">
+                    Sign Up
+                </button>
+                <div class="text-center mt-4 text-sm text-gray-400">
+                    Already have an account? <button type="button" id="switchToSignIn" class="text-white hover:underline">Sign in</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Video Modal -->
+        <div id="videoModal" class="hidden w-full max-w-4xl relative transform scale-95 transition-transform duration-300 shadow-2xl">
+            <button class="closeModalBtn absolute -top-10 right-0 text-gray-400 hover:text-white transition-colors z-50">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+            <div class="relative pt-[56.25%] w-full bg-black rounded-xl overflow-hidden border border-gray-800 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+                <iframe id="trailerIframe" class="absolute inset-0 w-full h-full" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
