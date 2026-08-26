@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 10);
     };
+    window.openModal = openModal; // expose globally for onclick="openModal(...)" in HTML
 
     // Close Modal Function
     const closeModal = () => {

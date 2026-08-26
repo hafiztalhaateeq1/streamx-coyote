@@ -285,34 +285,81 @@
             <!-- More Like This -->
             <div id="tab-more" class="tab-content">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
                     <!-- Movie 1 -->
-                    <div class="rounded-lg overflow-hidden relative group cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full aspect-[2/3] object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <i class="fa-solid fa-play text-3xl text-accent"></i>
+                    <div onclick="openModal('funnel')"
+                         class="rounded-xl overflow-hidden relative group cursor-pointer border border-gray-800 hover:border-accent/50 transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(0,230,230,0.15)]">
+                        <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                             alt="Movie Poster"
+                             class="w-full aspect-[2/3] object-cover transition-transform duration-500 group-hover:scale-110">
+                        <!-- Dark overlay + play icon -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2">
+                            <div class="w-14 h-14 rounded-full bg-accent/20 border-2 border-accent flex items-center justify-center shadow-[0_0_20px_rgba(0,230,230,0.6)] animate-pulse">
+                                <i class="fa-solid fa-play text-xl text-accent pl-1"></i>
+                            </div>
+                            <span class="text-white text-xs font-semibold tracking-wider uppercase">Watch Now</span>
+                        </div>
+                        <!-- Title bar always visible at bottom -->
+                        <div class="absolute bottom-0 left-0 right-0 px-3 py-2 bg-gradient-to-t from-black/80 to-transparent">
+                            <p class="text-white text-xs font-medium truncate">Action Thriller</p>
+                            <p class="text-accent text-[10px]">Free with signup</p>
                         </div>
                     </div>
+
                     <!-- Movie 2 -->
-                    <div class="rounded-lg overflow-hidden relative group cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full aspect-[2/3] object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <i class="fa-solid fa-play text-3xl text-accent"></i>
+                    <div onclick="openModal('funnel')"
+                         class="rounded-xl overflow-hidden relative group cursor-pointer border border-gray-800 hover:border-accent/50 transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(0,230,230,0.15)]">
+                        <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                             alt="Movie Poster"
+                             class="w-full aspect-[2/3] object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2">
+                            <div class="w-14 h-14 rounded-full bg-accent/20 border-2 border-accent flex items-center justify-center shadow-[0_0_20px_rgba(0,230,230,0.6)] animate-pulse">
+                                <i class="fa-solid fa-play text-xl text-accent pl-1"></i>
+                            </div>
+                            <span class="text-white text-xs font-semibold tracking-wider uppercase">Watch Now</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 px-3 py-2 bg-gradient-to-t from-black/80 to-transparent">
+                            <p class="text-white text-xs font-medium truncate">Sci-Fi Adventure</p>
+                            <p class="text-accent text-[10px]">Free with signup</p>
                         </div>
                     </div>
+
                     <!-- Movie 3 -->
-                    <div class="rounded-lg overflow-hidden relative group cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1616530940355-351fabd9524b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full aspect-[2/3] object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <i class="fa-solid fa-play text-3xl text-accent"></i>
+                    <div onclick="openModal('funnel')"
+                         class="rounded-xl overflow-hidden relative group cursor-pointer border border-gray-800 hover:border-accent/50 transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(0,230,230,0.15)]">
+                        <img src="https://images.unsplash.com/photo-1616530940355-351fabd9524b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                             alt="Movie Poster"
+                             class="w-full aspect-[2/3] object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2">
+                            <div class="w-14 h-14 rounded-full bg-accent/20 border-2 border-accent flex items-center justify-center shadow-[0_0_20px_rgba(0,230,230,0.6)] animate-pulse">
+                                <i class="fa-solid fa-play text-xl text-accent pl-1"></i>
+                            </div>
+                            <span class="text-white text-xs font-semibold tracking-wider uppercase">Watch Now</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 px-3 py-2 bg-gradient-to-t from-black/80 to-transparent">
+                            <p class="text-white text-xs font-medium truncate">Animated Comedy</p>
+                            <p class="text-accent text-[10px]">Free with signup</p>
                         </div>
                     </div>
+
                     <!-- Movie 4 -->
-                    <div class="rounded-lg overflow-hidden relative group cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full aspect-[2/3] object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <i class="fa-solid fa-play text-3xl text-accent"></i>
+                    <div onclick="openModal('funnel')"
+                         class="rounded-xl overflow-hidden relative group cursor-pointer border border-gray-800 hover:border-accent/50 transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(0,230,230,0.15)]">
+                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                             alt="Movie Poster"
+                             class="w-full aspect-[2/3] object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2">
+                            <div class="w-14 h-14 rounded-full bg-accent/20 border-2 border-accent flex items-center justify-center shadow-[0_0_20px_rgba(0,230,230,0.6)] animate-pulse">
+                                <i class="fa-solid fa-play text-xl text-accent pl-1"></i>
+                            </div>
+                            <span class="text-white text-xs font-semibold tracking-wider uppercase">Watch Now</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 px-3 py-2 bg-gradient-to-t from-black/80 to-transparent">
+                            <p class="text-white text-xs font-medium truncate">Mystery Drama</p>
+                            <p class="text-accent text-[10px]">Free with signup</p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
