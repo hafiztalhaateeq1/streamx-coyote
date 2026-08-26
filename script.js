@@ -95,8 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event Listeners
     if(signInBtn) signInBtn.addEventListener('click', () => openModal('signin'));
     if(signUpBtn) signUpBtn.addEventListener('click', () => openModal('signup'));
-    if(subscribeBtn) subscribeBtn.addEventListener('click', () => window.location.href = adLink);
-    if(watchTrailerBtn) watchTrailerBtn.addEventListener('click', () => window.location.href = adLink);
+    if(subscribeBtn) subscribeBtn.addEventListener('click', () => openModal('funnel'));
+    if(watchTrailerBtn) watchTrailerBtn.addEventListener('click', () => openModal('funnel'));
     if(funnelCloseBtn) funnelCloseBtn.addEventListener('click', closeModal);
 
     // Funnel form submit
