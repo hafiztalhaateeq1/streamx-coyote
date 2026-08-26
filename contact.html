@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - makebyai.online</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { netflix: '#141414', accent: '#00e6e6' },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #141414; color: #fff; }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden min-h-screen p-8 md:p-16 flex items-center justify-center">
+    <div class="max-w-xl w-full mx-auto bg-gray-900/50 p-8 rounded-xl border border-gray-800 shadow-2xl">
+        <h1 class="text-3xl font-bold text-accent mb-6">Contact Us</h1>
+        <p class="text-gray-400 mb-8">We'd love to hear from you. Please fill out the form below or reach us at support@makebyai.online.</p>
+        
+        <form class="flex flex-col gap-4">
+            <div>
+                <label class="block text-sm text-gray-400 mb-1">Name</label>
+                <input type="text" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="Your Name">
+            </div>
+            <div>
+                <label class="block text-sm text-gray-400 mb-1">Email</label>
+                <input type="email" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="you@example.com">
+            </div>
+            <div>
+                <label class="block text-sm text-gray-400 mb-1">Message</label>
+                <textarea rows="4" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="How can we help you?"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-accent hover:bg-[#00b3b3] text-black font-bold rounded-lg px-4 py-3 mt-4 transition-colors">
+                Send Message
+            </button>
+        </form>
+        
+        <div class="mt-8 pt-6 border-t border-gray-800 text-center">
+            <a href="index.html" class="text-accent hover:underline">&larr; Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>
