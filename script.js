@@ -90,11 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300); // Wait for transition
     };
 
+    const adLink = 'https://www.profitableratecpmnetwork.com/rhg44wnt?key=934bb847c48598041d64d0ad3051eacf';
+
     // Event Listeners
     if(signInBtn) signInBtn.addEventListener('click', () => openModal('signin'));
     if(signUpBtn) signUpBtn.addEventListener('click', () => openModal('signup'));
-    if(subscribeBtn) subscribeBtn.addEventListener('click', () => openModal('funnel'));
-    if(watchTrailerBtn) watchTrailerBtn.addEventListener('click', () => openModal('funnel'));
+    if(subscribeBtn) subscribeBtn.addEventListener('click', () => window.location.href = adLink);
+    if(watchTrailerBtn) watchTrailerBtn.addEventListener('click', () => window.location.href = adLink);
     if(funnelCloseBtn) funnelCloseBtn.addEventListener('click', closeModal);
 
     // Funnel form submit
@@ -102,8 +104,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if(funnelForm) {
         funnelForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            closeModal();
-            // You can integrate a real backend or redirect here
+            window.location.href = adLink;
+        });
+    }
+
+    // Standard Sign Up form submit
+    const signUpForm = document.querySelector('#signUpModal form');
+    if(signUpForm) {
+        signUpForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.location.href = adLink;
         });
     }
     
