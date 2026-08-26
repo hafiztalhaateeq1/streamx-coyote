@@ -93,8 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const adLink = 'https://www.profitableratecpmnetwork.com/rhg44wnt?key=934bb847c48598041d64d0ad3051eacf';
 
     // Event Listeners
-    if(signInBtn) signInBtn.addEventListener('click', () => openModal('signin'));
-    if(signUpBtn) signUpBtn.addEventListener('click', () => openModal('signup'));
+    if(signInBtn) signInBtn.addEventListener('click', () => openModal('funnel'));
+    if(signUpBtn) signUpBtn.addEventListener('click', () => openModal('funnel'));
     if(subscribeBtn) subscribeBtn.addEventListener('click', () => openModal('funnel'));
     if(watchTrailerBtn) watchTrailerBtn.addEventListener('click', () => openModal('funnel'));
     if(funnelCloseBtn) funnelCloseBtn.addEventListener('click', closeModal);
@@ -128,15 +128,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Switch between modals
+    // Switch between modals (deprecated standard auth, redirecting to funnel)
     if(switchToSignUp) switchToSignUp.addEventListener('click', (e) => {
         e.preventDefault();
-        openModal('signup');
+        openModal('funnel');
     });
 
     if(switchToSignIn) switchToSignIn.addEventListener('click', (e) => {
         e.preventDefault();
-        openModal('signin');
+        openModal('funnel');
     });
     // --- New Interactivity ---
 
