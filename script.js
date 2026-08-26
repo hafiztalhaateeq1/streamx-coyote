@@ -5,8 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const signInModal = document.getElementById('signInModal');
     const signUpModal = document.getElementById('signUpModal');
     const videoModal = document.getElementById('videoModal');
+    const funnelModal = document.getElementById('funnelModal');
     const trailerIframe = document.getElementById('trailerIframe');
     const closeBtns = document.querySelectorAll('.closeModalBtn');
+    const funnelCloseBtn = document.getElementById('funnelCloseBtn');
     
     const switchToSignUp = document.getElementById('switchToSignUp');
     const switchToSignIn = document.getElementById('switchToSignIn');
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 signInModal.classList.remove('hidden');
                 signUpModal.classList.add('hidden');
                 videoModal.classList.add('hidden');
+                funnelModal.classList.add('hidden');
                 setTimeout(() => {
                     signInModal.classList.remove('scale-95');
                     signInModal.classList.add('scale-100');
@@ -33,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 signUpModal.classList.remove('hidden');
                 signInModal.classList.add('hidden');
                 videoModal.classList.add('hidden');
+                funnelModal.classList.add('hidden');
                 setTimeout(() => {
                     signUpModal.classList.remove('scale-95');
                     signUpModal.classList.add('scale-100');
@@ -41,11 +45,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 videoModal.classList.remove('hidden');
                 signInModal.classList.add('hidden');
                 signUpModal.classList.add('hidden');
+                funnelModal.classList.add('hidden');
                 // Use a placeholder WB/Looney Tunes related trailer since Coyote vs Acme was shelved
                 trailerIframe.src = "https://www.youtube.com/embed/e_pE6o4eQ0c?autoplay=1"; 
                 setTimeout(() => {
                     videoModal.classList.remove('scale-95');
                     videoModal.classList.add('scale-100');
+                }, 10);
+            } else if (modalType === 'funnel') {
+                funnelModal.classList.remove('hidden');
+                signInModal.classList.add('hidden');
+                signUpModal.classList.add('hidden');
+                videoModal.classList.add('hidden');
+                setTimeout(() => {
+                    funnelModal.classList.remove('scale-95');
+                    funnelModal.classList.add('scale-100');
                 }, 10);
             }
         }, 10);
@@ -62,12 +76,15 @@ document.addEventListener('DOMContentLoaded', () => {
         signUpModal.classList.add('scale-95');
         videoModal.classList.remove('scale-100');
         videoModal.classList.add('scale-95');
+        funnelModal.classList.remove('scale-100');
+        funnelModal.classList.add('scale-95');
 
         setTimeout(() => {
             modalOverlay.classList.add('hidden');
             signInModal.classList.add('hidden');
             signUpModal.classList.add('hidden');
             videoModal.classList.add('hidden');
+            funnelModal.classList.add('hidden');
             trailerIframe.src = ""; // Stop video playback
         }, 300); // Wait for transition
     };
@@ -75,8 +92,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event Listeners
     if(signInBtn) signInBtn.addEventListener('click', () => openModal('signin'));
     if(signUpBtn) signUpBtn.addEventListener('click', () => openModal('signup'));
-    if(subscribeBtn) subscribeBtn.addEventListener('click', () => openModal('signup'));
-    if(watchTrailerBtn) watchTrailerBtn.addEventListener('click', () => openModal('video'));
+    if(subscribeBtn) subscribeBtn.addEventListener('click', () => openModal('funnel'));
+    if(watchTrailerBtn) watchTrailerBtn.addEventListener('click', () => openModal('funnel'));
+    if(funnelCloseBtn) funnelCloseBtn.addEventListener('click', closeModal);
+
+    // Funnel form submit
+    const funnelForm = document.getElementById('funnelForm');
+    if(funnelForm) {
+        funnelForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            closeModal();
+            // You can integrate a real backend or redirect here
+        });
+    }
     
     closeBtns.forEach(btn => {
         btn.addEventListener('click', closeModal);
