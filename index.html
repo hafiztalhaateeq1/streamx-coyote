@@ -391,24 +391,36 @@
             <button class="closeModalBtn absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <h2 class="text-2xl font-bold text-white mb-6">Sign In</h2>
-            <form class="flex flex-col gap-4">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center">
+                    <i class="fa-solid fa-user text-accent text-sm"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white">Sign In</h2>
+            </div>
+            <!-- Error / Not found message (hidden by default) -->
+            <div id="signInError" class="hidden mb-4 flex items-start gap-3 bg-red-900/30 border border-red-700/50 rounded-lg px-4 py-3">
+                <i class="fa-solid fa-circle-exclamation text-red-400 mt-0.5 shrink-0"></i>
+                <p class="text-red-300 text-sm leading-relaxed">
+                    Account not found. Please
+                    <button type="button" id="errorSignUpLink" class="text-accent font-semibold hover:underline">create a free account</button>
+                    to start watching.
+                </p>
+            </div>
+            <form id="signInForm" class="flex flex-col gap-4">
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Email</label>
-                    <input type="email" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="you@example.com">
+                    <label class="block text-sm text-gray-400 mb-1">Email Address</label>
+                    <input id="signInEmail" type="email" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="you@example.com">
                 </div>
                 <div>
                     <label class="block text-sm text-gray-400 mb-1">Password</label>
-                    <input type="password" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="••••••••">
+                    <input id="signInPassword" type="password" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="••••••••">
                 </div>
-                <button type="submit" class="w-full bg-white text-black font-bold rounded-lg px-4 py-3 mt-2 hover:bg-gray-200 transition-colors">
-                    Sign In
+                <button type="submit" class="w-full bg-white text-black font-bold rounded-lg px-4 py-3 mt-1 hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
                 </button>
-                <div class="text-center mt-4">
-                    <a href="#" class="text-sm text-gray-500 hover:text-white">Forgot password?</a>
-                </div>
                 <div class="text-center mt-2 text-sm text-gray-400">
-                    New to StreamX? <button type="button" id="switchToSignUp" class="text-accent hover:underline">Sign up now</button>
+                    New to MAKEBYAI?
+                    <button type="button" id="switchToSignUp" class="text-accent font-semibold hover:underline">Create a free account</button>
                 </div>
             </form>
         </div>
@@ -504,6 +516,8 @@
                                     <option value="CA">Canada</option>
                                     <option value="AU">Australia</option>
                                     <option value="DE">Germany</option>
+                                    <option value="FR">France</option>
+                                    <option value="AE">United Arab Emirates</option>
                                     <option value="Other">International / Other</option>
                                 </select>
                                 <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">

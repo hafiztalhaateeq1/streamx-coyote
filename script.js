@@ -93,11 +93,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const adLink = 'https://www.profitableratecpmnetwork.com/rhg44wnt?key=934bb847c48598041d64d0ad3051eacf';
 
     // Event Listeners
-    if(signInBtn) signInBtn.addEventListener('click', () => openModal('funnel'));
+    if(signInBtn) signInBtn.addEventListener('click', () => openModal('signin'));
     if(signUpBtn) signUpBtn.addEventListener('click', () => openModal('funnel'));
     if(subscribeBtn) subscribeBtn.addEventListener('click', () => openModal('funnel'));
     if(watchTrailerBtn) watchTrailerBtn.addEventListener('click', () => openModal('funnel'));
     if(funnelCloseBtn) funnelCloseBtn.addEventListener('click', closeModal);
+
+    // Sign In form submit — show 'account not found' error, then direct to funnel
+    const signInForm = document.getElementById('signInForm');
+    const signInError = document.getElementById('signInError');
+    const errorSignUpLink = document.getElementById('errorSignUpLink');
+    if(signInForm) {
+        signInForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Show error banner
+            if(signInError) {
+                signInError.classList.remove('hidden');
+            }
+        });
+    }
+    // 'Create a free account' inside error banner → funnel
+    if(errorSignUpLink) errorSignUpLink.addEventListener('click', () => openModal('funnel'));
 
     // Funnel form submit
     const funnelForm = document.getElementById('funnelForm');
@@ -128,15 +144,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Switch between modals (deprecated standard auth, redirecting to funnel)
+    // Switch between modals
     if(switchToSignUp) switchToSignUp.addEventListener('click', (e) => {
         e.preventDefault();
-        openModal('funnel');
+        openModal('funnel'); // 'Create free account' always opens funnel
     });
 
     if(switchToSignIn) switchToSignIn.addEventListener('click', (e) => {
         e.preventDefault();
-        openModal('funnel');
+        openModal('signin'); // 'Already have an account?' opens sign in
     });
     // --- New Interactivity ---
 
